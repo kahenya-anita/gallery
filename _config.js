@@ -8,4 +8,5 @@ config.mongoURI = {
     "mongodb+srv://anitakahenya1:eFp1I1Is1G2qtczs@gallery.wc344.mongodb.net/darkroom-dev?retryWrites=true&w=majority",
   test: "mongodb+srv://anitakahenya1:eFp1I1Is1G2qtczs@gallery.wc344.mongodb.net/darkroom-test?retryWrites=true&w=majority",
 };
+
 module.exports = config;
