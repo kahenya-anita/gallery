@@ -1,46 +1,48 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const path = require('path');
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const path = require("path");
 
 // Define routes
-let index = require('./routes/index');
-let image = require('./routes/image');
+let index = require("./routes/index");
+let image = require("./routes/image");
 
 // connecting the database
-let mongodb_url = 'mongodb://localhost:27017/';
-let dbName = 'darkroom';
-mongoose.connect(`${mongodb_url}${dbName}`,{ useNewUrlParser: true , useUnifiedTopology: true }, (err)=>{
-    if (err) console.log(err)
-});
+// mongodb+srv://anita2:fx3kxWOxligeEVOn@cluster0.wxdzrh7.mongodb.net/
+let mongodb_url = "mongodb://localhost:27017/";
+// let mongodb_url =
+//   "mongodb+srv://anitakahenya1:eFp1I1Is1G2qtczs@gallery.wc344.mongodb.net/darkroom-dev?retryWrites=true&w=majority";
+let dbName = "darkroom";
+mongoose.connect(
+  `${mongodb_url}${dbName}`,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  (err) => {
+    if (err) console.log(err);
+  }
+);
 
 // test if the database has connected successfully
 let db = mongoose.connection;
-db.once('open', ()=>{
-    console.log('Database connected successfully')
-})
+db.once("open", () => {
+  console.log("Database connected successfully");
+});
 
 // Initializing the app
 const app = express();
 
-
 // View Engine
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 
 // Set up the public folder;
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 // body parser middleware
-app.use(express.json())
+app.use(express.json());
 
+app.use("/", index);
+app.use("/image", image);
 
-app.use('/', index);
-app.use('/image', image);
-
-
-
- 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT,() =>{
-    console.log(`Server is listening at http://localhost:${PORT}`)
+const PORT = process.env.PORT || 5500;
+app.listen(PORT, () => {
+  console.log(`Server is listening at http://localhost:${PORT}`);
 });
